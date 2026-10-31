@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Event Management System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f3f5fa;
+    color: #263247;
+}
+
+header {
+    background: #243b70;
+    color: white;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+nav a:hover {
+    color: #ffc857;
+}
+
+.hero {
+    background: linear-gradient(120deg, #243b70, #5278bd);
+    color: white;
+    text-align: center;
+    padding: 75px 20px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    border: none;
+    padding: 11px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #f7b844;
+    color: #202c43;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.container {
+    width: 90%;
+    max-width: 1150px;
+    margin: 35px auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #243b70;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 12px #00000010;
+}
+
+.stat-card h2 {
+    color: #315ca0;
+    margin-bottom: 8px;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+input,
+select,
+textarea {
+    padding: 11px;
+    border: 1px solid #ccd3df;
+    border-radius: 6px;
+    width: 100%;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #315ca0;
+}
+
+.filters input {
+    flex: 2;
+    min-width: 200px;
+}
+
+.filters select {
+    flex: 1;
+    min-width: 150px;
+}
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 14px #00000012;
+    transition: 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-banner {
+    height: 120px;
+    background: linear-gradient(120deg, #4267a8, #7f9ed3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 42px;
+}
+
+.event-content {
+    padding: 18px;
+}
+
+.event-content h3 {
+    color: #243b70;
+    margin-bottom: 12px;
+}
+
+.event-content p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.event-category {
+    display: inline-block;
+    background: #e7edfa;
+    color: #315ca0;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.event-content button {
+    margin-top: 12px;
+    width: 100%;
+}
+
+.form-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 35px;
+    box-shadow: 0 3px 12px #00000010;
+}
+
+.form-section h2 {
+    margin-bottom: 20px;
+    color: #243b70;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-section .btn {
+    width: 100%;
+}
+
+.bookings {
+    margin-top: 35px;
+}
+
+.booking-item {
+    background: white;
+    border-left: 5px solid #4267a8;
+    padding: 17px;
+    margin-bottom: 12px;
+    border-radius: 7px;
+}
+
+.booking-item h3 {
+    color: #243b70;
+    margin-bottom: 8px;
+}
+
+.cancel-btn {
+    background: #e65c5c;
+    color: white;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.delete-btn {
+    background: #d9534f;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-panel {
+    background: #e9effb;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 35px;
+}
+
+.admin-panel h2 {
+    color: #243b70;
+    margin-bottom: 18px;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    background: white;
+    border-radius: 8px;
+    color: #777;
+}
+
+footer {
+    background: #243b70;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+.message {
+    margin-top: 12px;
+    font-weight: bold;
+    color: #27834c;
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎓 Campus Events</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#events">Events</a>
+        <a href="#bookings">My Bookings</a>
+        <a href="#admin">Admin</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>Campus Event Management System</h1>
+    <p>Discover events, participate and make your college life memorable.</p>
+    <button class="btn" onclick="goToEvents()">Explore Events</button>
+</section>
+
+<main class="container">
+
+    <section class="stats">
+        <div class="stat-card">
+            <h2 id="totalEvents">0</h2>
+            <p>Total Events</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="totalBookings">0</h2>
+            <p>Total Bookings</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="totalCategories">0</h2>
+            <p>Categories</p>
+        </div>
+    </section>
+
+    <section id="events">
+        <h2 class="section-title">Upcoming Events</h2>
+
+        <div class="filters">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search events..."
+                oninput="displayEvents()">
+
+            <select id="categoryFilter" onchange="displayEvents()">
+                <option value="All">All Categories</option>
+                <option value="Technical">Technical</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Sports">Sports</option>
+                <option value="Workshop">Workshop</option>
+            </select>
+        </div>
+
+        <div class="event-grid" id="eventGrid"></div>
+    </section>
+
+    <section class="bookings" id="bookings">
+        <h2 class="section-title">My Bookings</h2>
+        <div id="bookingList"></div>
+    </section>
+
+    <section class="form-section" id="register">
+        <h2>Student Registration</h2>
+
+        <form id="studentForm">
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" id="studentName"
+                    placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Register Number</label>
+                <input type="text" id="registerNumber"
+                    placeholder="Enter register number" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="studentEmail"
+                    placeholder="Enter email" required>
+            </div>
+
+            <button class="btn" type="submit">Register Student</button>
+            <p class="message" id="studentMessage"></p>
+        </form>
+    </section>
+
+    <section class="admin-panel" id="admin">
+        <h2>Admin Dashboard</h2>
+
+        <form id="eventForm">
+            <div class="form-group">
+                <label>Event Name</label>
+                <input type="text" id="eventName"
+                    placeholder="Enter event name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Event Category</label>
+                <select id="eventCategory" required>
+                    <option value="">Select Category</option>
+                    <option value="Technical">Technical</option>
+                    <option value="Cultural">Cultural</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Workshop">Workshop</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Event Date</label>
+                <input type="date" id="eventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label>Event Venue</label>
+                <input type="text" id="eventVenue"
+                    placeholder="Enter venue" required>
+            </div>
+
+            <div class="form-group">
+                <label>Event Description</label>
+                <textarea id="eventDescription"
+                    rows="3" placeholder="Enter description" required></textarea>
+            </div>
+
+            <button type="submit" class="btn">Add New Event</button>
+            <p class="message" id="adminMessage"></p>
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Campus Event Management System</p>
+    <p>Designed using HTML, CSS and JavaScript</p>
+</footer>
+
+<script>
+const defaultEvents = [
+    {
+        id: 1,
+        name: "Code Challenge",
+        category: "Technical",
+        date: "2026-11-15",
+        venue: "Computer Lab",
+        description: "Test your programming skills."
+    },
+    {
+        id: 2,
+        name: "Cultural Fest",
+        category: "Cultural",
+        date: "2026-11-20",
+        venue: "College Auditorium",
+        description: "Celebrate music, dance and art."
+    },
+    {
+        id: 3,
+        name: "Football Tournament",
+        category: "Sports",
+        date: "2026-11-25",
+        venue: "College Ground",
+        description: "Participate in the college football event."
+    },
+    {
+        id: 4,
+        name: "Web Development Workshop",
+        category: "Workshop",
+        date: "2026-12-01",
+        venue: "Seminar Hall",
+        description: "Learn modern website development."
+    },
+    {
+        id: 5,
+        name: "AI Innovation Contest",
+        category: "Technical",
+        date: "2026-12-05",
+        venue: "Innovation Lab",
+        description: "Present your artificial intelligence ideas."
+    },
+    {
+        id: 6,
+        name: "Photography Contest",
+        category: "Cultural",
+        date: "2026-12-10",
+        venue: "Main Block",
+        description: "Showcase your photography talent."
+    }
+];
+
+let events = JSON.parse(localStorage.getItem("campusEvents"))
+    || defaultEvents;
+
+let bookings = JSON.parse(localStorage.getItem("campusBookings"))
+    || [];
+
+let students = JSON.parse(localStorage.getItem("campusStudents"))
+    || [];
+
+function saveData() {
+    localStorage.setItem("campusEvents", JSON.stringify(events));
+    localStorage.setItem("campusBookings", JSON.stringify(bookings));
+    localStorage.setItem("campusStudents", JSON.stringify(students));
+}
+
+function displayEvents() {
+    const grid = document.getElementById("eventGrid");
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase();
+
+    const category = document.getElementById("categoryFilter").value;
+
+    grid.innerHTML = "";
+
+    const filtered = events.filter(event => {
+        const matchesName = event.name.toLowerCase().includes(search);
+        const matchesCategory =
+            category === "All" || event.category === category;
+
+        return matchesName && matchesCategory;
+    });
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty">No events found.</div>';
+        return;
+    }
+
+    filtered.forEach(event => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+
+        card.innerHTML = `
+            <div class="event-banner">🎉</div>
+            <div class="event-content">
+                <span class="event-category">${event.category}</span>
+                <h3>${escapeHTML(event.name)}</h3>
+                <p>📅 ${escapeHTML(event.date)}</p>
+                <p>📍 ${escapeHTML(event.venue)}</p>
+                <p>${escapeHTML(event.description)}</p>
+                <button class="btn" onclick="bookEvent(${event.id})">
+                    Book Event
+                </button>
+                <button class="delete-btn"
+                    onclick="deleteEvent(${event.id})">
+                    Delete Event
+                </button>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[character]);
+}
+
+function bookEvent(id) {
+    const event = events.find(item => item.id === id);
+
+    if (!event) {
+        alert("Event not found.");
+        return;
+    }
+
+    const name = prompt("Enter your student name:");
+
+    if (!name || !name.trim()) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    const alreadyBooked = bookings.some(item =>
+        item.eventId === id &&
+        item.student.toLowerCase() === name.trim().toLowerCase()
+    );
+
+    if (alreadyBooked) {
+        alert("You have already booked this event.");
+        return;
+    }
+
+    bookings.push({
+        id: Date.now(),
+        eventId: id,
+        eventName: event.name,
+        student: name.trim(),
+        date: event.date
+    });
+
+    saveData();
+    displayBookings();
+    updateStats();
+
+    alert("Event booked successfully!");
+}
+
+function displayBookings() {
+    const list = document.getElementById("bookingList");
+    list.innerHTML = "";
+
+    if (bookings.length === 0) {
+        list.innerHTML = '<div class="empty">No bookings available.</div>';
+        return;
+    }
+
+    bookings.forEach(booking => {
+        const item = document.createElement("div");
+        item.className = "booking-item";
+
+        item.innerHTML = `
+            <h3>${escapeHTML(booking.eventName)}</h3>
+            <p>Student: ${escapeHTML(booking.student)}</p>
+            <p>Date: ${escapeHTML(booking.date)}</p>
+            <button class="cancel-btn"
+                onclick="cancelBooking(${booking.id})">
+                Cancel Booking
+            </button>
+        `;
+
+        list.appendChild(item);
+    });
+}
+
+function cancelBooking(id) {
+    const confirmCancel = confirm("Cancel this booking?");
+
+    if (!confirmCancel) {
+        return;
+    }
+
+    bookings = bookings.filter(item => item.id !== id);
+
+    saveData();
+    displayBookings();
+    updateStats();
+
+    alert("Booking cancelled.");
+}
+
+function addEvent(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("eventName").value.trim();
+    const category = document.getElementById("eventCategory").value;
+    const date = document.getElementById("eventDate").value;
+    const venue = document.getElementById("eventVenue").value.trim();
+    const description =
+        document.getElementById("eventDescription").value.trim();
+
+    if (!name || !category || !date || !venue || !description) {
+        alert("Please fill all event details.");
+        return;
+    }
+
+    const newEvent = {
+        id: Date.now(),
+        name,
+        category,
+        date,
+        venue,
+        description
+    };
+
+    events.push(newEvent);
+
+    saveData();
+    displayEvents();
+    updateStats();
+
+    document.getElementById("eventForm").reset();
+
+    document.getElementById("adminMessage").textContent =
+        "Event added successfully!";
+}
+
+function deleteEvent(id) {
+    const confirmDelete = confirm("Delete this event?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    events = events.filter(event => event.id !== id);
+
+    bookings = bookings.filter(booking => booking.eventId !== id);
+
+    saveData();
+    displayEvents();
+    displayBookings();
+    updateStats();
+
+    alert("Event deleted successfully.");
+}
+
+function registerStudent(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("studentName").value.trim();
+    const reg = document.getElementById("registerNumber").value.trim();
+    const email = document.getElementById("studentEmail").value.trim();
+
+    const existing = students.some(student =>
+        student.registerNumber.toLowerCase() === reg.toLowerCase()
+    );
+
+    if (existing) {
+        alert("Register number already exists.");
+        return;
+    }
+
+    students.push({
+        id: Date.now(),
+        name,
+        registerNumber: reg,
+        email
+    });
+
+    saveData();
+
+    document.getElementById("studentForm").reset();
+
+    document.getElementById("studentMessage").textContent =
+        "Student registered successfully!";
+}
+
+function updateStats() {
+    document.getElementById("totalEvents").textContent = events.length;
+
+    document.getElementById("totalBookings").textContent =
+        bookings.length;
+
+    const categories = new Set(events.map(event => event.category));
+
+    document.getElementById("totalCategories").textContent =
+        categories.size;
+}
+
+function goToEvents() {
+    document.getElementById("events").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+document.getElementById("eventForm")
+    .addEventListener("submit", addEvent);
+
+document.getElementById("studentForm")
+    .addEventListener("submit", registerStudent);
+
+displayEvents();
+displayBookings();
+updateStats();
+
+</script>
+
+</body>
+</html>
